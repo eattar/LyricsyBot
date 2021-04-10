@@ -16,35 +16,15 @@ import os
 
 
 class RadioJavanScraping:
-    # proxies = {'https': 'http://167.99.12.149:3128',
-    #            'http': 'http://153.149.168.27:3128'}
+    
     chrome_path = os.path.realpath('chromedriver')
     chrome_options = webdriver.ChromeOptions()
     chrome_options.accept_untrusted_certs = True
     chrome_options.assume_untrusted_cert_issuer = True
     capa = DesiredCapabilities.CHROME
-    # capa["pageLoadStrategy"] = "none"
     chrome_options.add_argument("--headless")
-    # chrome_options.add_argument("--no-sandbox")
-    # chrome_options.add_argument("--disable-impl-side-painting")
-    # chrome_options.add_argument("--disable-setuid-sandbox")
-    # chrome_options.add_argument("--disable-seccomp-filter-sandbox")
-    # chrome_options.add_argument("--disable-breakpad")
-    # chrome_options.add_argument("--disable-client-side-phishing-detection")
-    # chrome_options.add_argument("--disable-cast")
-    # chrome_options.add_argument("--disable-cast-streaming-hw-encoding")
-    # chrome_options.add_argument("--disable-cloud-import")
-    # chrome_options.add_argument("--disable-popup-blocking")
-    # chrome_options.add_argument("--ignore-certificate-errors")
-    # chrome_options.add_argument("--disable-session-crashed-bubble")
-    # chrome_options.add_argument("--disable-ipv6")
-    # chrome_options.add_argument("--allow-http-screen-capture")
     chrome_options.add_argument("--start-maximized")
-    # chrome_options.add_argument("--allow-running-insecure-content")
-    # cap["pageLoadStrategy"] = "normal"
-    # , desired_capabilities=cap
     browser = webdriver.Chrome(executable_path=chrome_path, chrome_options=chrome_options, desired_capabilities=capa)
-    # browser.set_page_load_timeout(20)
 
     def download(self, num_retries=2):
 
@@ -60,13 +40,12 @@ class RadioJavanScraping:
                     # recursively retry 5xx HTTP errors
                     return self.download(num_retries - 1)
         except requests.exceptions.RequestException as e:
-            # print('Download error:', e.reason)
             html = None
 
         return html
 
     def check_box_id(self, name):
-        data = {'log': 'hak', 'pwd': '123456**123456*'}
+        data = {'log': '', 'pwd': '***'}
         session = requests.session()
         session.post('http://lyricsy.ir/wp-login.php', data=data)
         new_post_page = session.get('http://lyricsy.ir/wp-admin/post-new.php')
